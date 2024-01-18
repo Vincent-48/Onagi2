@@ -8,17 +8,21 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.onagi2.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
     TextView txtName;
     TextView txtAbout;
     ImageView txtProfilePic;
+    BottomNavigationView bottomNavigationView;
     ActivityMainBinding binding;
 
 
@@ -27,39 +31,40 @@ public class MainActivity extends AppCompatActivity {
     @Overrides
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        setContentView(R.layout.activity_main);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.home:
-                    replaceFragment(new HomeFragment());
-                    Toast.makeText(this,"Home section",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.profile:
-                    replaceFragment(new ProfileFragment());
-                    Toast.makeText(this,"Profile section",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.messages:
-                    replaceFragment(new MessageFragment());
-                    Toast.makeText(this,"Messages section",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.notify:
-                    replaceFragment(new NotifyFragment());
-                    Toast.makeText(this,"Notifications section",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.friends:
-                    replaceFragment(new FriendsFragment());
-                    Toast.makeText(this,"Friends section",Toast.LENGTH_SHORT).show();
-
-                    break;
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        replaceFragment(new HomeFragment());
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.friends:
+                        replaceFragment(new FriendsFragment());
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.profile:
+                        replaceFragment(new ProfileFragment());
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.notify:
+                        replaceFragment(new NotifyFragment());
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.messages:
+                        replaceFragment(new MessagesFragment());
+                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
             }
-            return true;
         });
 
 
-        txtProfilePic = findViewById(R.id.imageView);
+
 
         ImageView leftIcon = findViewById(R.id.left_icon);
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout,fragment);
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
     }
 }
