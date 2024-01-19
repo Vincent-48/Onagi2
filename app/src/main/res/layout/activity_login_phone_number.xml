@@ -83,9 +83,11 @@
         
         <com.hbb20.CountryCodePicker
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/login_countrycode"/>
 
         <EditText
+            android:id="@+id/login_mobile_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -103,11 +105,13 @@
         android:layout_weight="20"
         android:orientation="vertical">
         <Button
+            android:id="@+id/send_otp_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="send otp"
             android:background="@drawable/btn_rounded_corner"/>
         <ProgressBar
+            android:id="@+id/login_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminateTint="@color/my_primary"

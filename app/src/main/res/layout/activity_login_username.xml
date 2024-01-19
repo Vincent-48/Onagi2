@@ -84,6 +84,7 @@
 
 
         <EditText
+            android:id="@+id/login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -101,11 +102,13 @@
         android:layout_weight="20"
         android:orientation="vertical">
         <Button
+            android:id="@+id/login_let_me_in_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="LET ME IN"
             android:background="@drawable/btn_rounded_corner"/>
         <ProgressBar
+            android:id="@+id/login_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminateTint="@color/my_primary"
