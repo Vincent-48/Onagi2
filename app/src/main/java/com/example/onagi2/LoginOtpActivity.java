@@ -27,6 +27,8 @@ public class LoginOtpActivity extends AppCompatActivity {
     Button nextBtn;
     ProgressBar progressBar;
     TextView resendOtpTextView;
+    String verificationCode;
+    PhoneAuthProvider.ForceResendingToken forceResendingToken;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -54,12 +56,19 @@ public class LoginOtpActivity extends AppCompatActivity {
                 .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                     @Override
                     public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                        signIn(phoneAuthCredential);
 
                     }
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
+                        AndroidUtil.showToast(getApplicationContext(),"Otp verification failed");
 
+                    }
+
+                    @Override
+                    public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                        super.onCodeSent(s, forceResendingToken);
                     }
                 });
 
@@ -73,5 +82,8 @@ public class LoginOtpActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             nextBtn.setVisibility(View.VISIBLE);
         }
+    }
+    void signIn(PhoneAuthCredential phoneAuthCredential){
+
     }
 }
