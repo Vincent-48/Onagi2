@@ -24,6 +24,7 @@ public class LoginOtpActivity extends AppCompatActivity {
     String countryCode;
     Long timeoutSeconds = 60L;
 
+
     EditText inputOtp;
     Button nextBtn;
     ProgressBar progressBar;
@@ -42,10 +43,18 @@ public class LoginOtpActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.login_progress_bar);
         resendOtpTextView = findViewById(R.id.resend_otp_textview);
 
+
         phoneNumber = getIntent().getExtras().getString("phone");
 
 
         sendOtp("254", phoneNumber, false);
+
+        nextBtn.setOnClickListener(v -> {
+            String enteredOtp = inputOtp.getText().toString();
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationCode,enteredOtp);
+            signIn(credential);
+            setInProgress(true);
+        });
 
 
 
@@ -102,4 +111,5 @@ public class LoginOtpActivity extends AppCompatActivity {
     void signIn(PhoneAuthCredential phoneAuthCredential){
 
     }
+
 }
