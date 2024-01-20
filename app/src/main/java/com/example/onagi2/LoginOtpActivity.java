@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginOtpActivity extends AppCompatActivity {
 
     String phoneNumber;
+    String countryCode;
     Long timeoutSeconds = 60L;
 
     EditText inputOtp;
@@ -28,7 +29,7 @@ public class LoginOtpActivity extends AppCompatActivity {
     ProgressBar progressBar;
     TextView resendOtpTextView;
     String verificationCode;
-    PhoneAuthProvider.ForceResendingToken forceResendingToken;
+    PhoneAuthProvider.ForceResendingToken resendingToken;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -43,11 +44,14 @@ public class LoginOtpActivity extends AppCompatActivity {
 
         phoneNumber = getIntent().getExtras().getString("phone");
 
-        sendOtp("phoneNumber",false);
+
+        sendOtp("254", phoneNumber, false);
+
+
 
 
     }
-    void sendOtp(String phoneNumber, boolean isResend){
+    void sendOtp(String countryCode,String phoneNumber, boolean isResend){
         setInProgress(true);
         PhoneAuthOptions.Builder builder = PhoneAuthOptions.newBuilder(mAuth)
                 .setPhoneNumber(phoneNumber)
@@ -57,20 +61,32 @@ public class LoginOtpActivity extends AppCompatActivity {
                     @Override
                     public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                         signIn(phoneAuthCredential);
+                        setInProgress(false);
 
                     }
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
                         AndroidUtil.showToast(getApplicationContext(),"Otp verification failed");
+                        setInProgress(false);
 
                     }
 
                     @Override
                     public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                         super.onCodeSent(s, forceResendingToken);
+                        verificationCode = s;
+                        resendingToken = forceResendingToken;
+                        AndroidUtil.showToast(getApplicationContext(),"Otp sent successfully");
+                        setInProgress(false);
                     }
                 });
+        if(isResend){
+            PhoneAuthProvider.verifyPhoneNumber(builder.setForceResendingToken(resendingToken).build());
+        }
+        else {
+            PhoneAuthProvider.verifyPhoneNumber(builder.build());
+        }
 
     }
     void setInProgress(boolean inProgress){
