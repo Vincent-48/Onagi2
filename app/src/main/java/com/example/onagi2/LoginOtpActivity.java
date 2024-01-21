@@ -141,6 +141,10 @@ public class LoginOtpActivity extends AppCompatActivity {
             public void run() {
                 timeoutSeconds--;
                 resendOtpTextView.setText("resend OTP in" + timeoutSeconds + "seconds");
+                if (timeoutSeconds<=0){
+                    timeoutSeconds = 60L;
+                    timer.cancel();
+                }
             }
         },0, 4000);
     }
