@@ -62,6 +62,10 @@ public class LoginOtpActivity extends AppCompatActivity {
             setInProgress(true);
         });
 
+        resendOtpTextView.setOnClickListener(v -> {
+            sendOtp("254",phoneNumber,true);
+        });
+
 
 
 
@@ -123,6 +127,7 @@ public class LoginOtpActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Intent intent = new Intent(LoginOtpActivity.this, LoginUsernameActivity.class);
                     intent.putExtra("phone",phoneNumber);
+                    startActivity(intent);
 
                     AndroidUtil.showToast(getApplicationContext(),"Otp Verification Successful");
                 }
@@ -144,6 +149,9 @@ public class LoginOtpActivity extends AppCompatActivity {
                 if (timeoutSeconds<=0){
                     timeoutSeconds = 60L;
                     timer.cancel();
+                    runOnUiThread(() -> {
+                        resendOtpTextView.setEnabled(true);
+                    });
                 }
             }
         },0, 4000);
