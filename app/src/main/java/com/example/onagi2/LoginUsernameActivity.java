@@ -56,12 +56,13 @@ public class LoginUsernameActivity extends AppCompatActivity {
         });
     }
     void setUserName(){
-        setInProgress(true);
+
         String username = usernameInput.getText().toString();
         if (username.isEmpty() || username.length()<3){
             usernameInput.setError("Username should be at least 3chars");
             return;
         }
+        setInProgress(true);
         if(userModel != null){
             userModel.setUsername(username);
         }
@@ -74,8 +75,8 @@ public class LoginUsernameActivity extends AppCompatActivity {
                 setInProgress(false);
                 if (task.isSuccessful()){
                     Intent intent = new Intent(LoginUsernameActivity.this,MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                    finish();
                 }
             }
         });
