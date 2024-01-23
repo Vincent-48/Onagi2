@@ -42,7 +42,7 @@ public class LoginUsernameActivity extends AppCompatActivity {
     }
 
     void getUsername(){
-        setInProgress(true);
+        setInProgress(false);
         FirebaseUtil.currentUserDetails().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -62,6 +62,8 @@ public class LoginUsernameActivity extends AppCompatActivity {
             usernameInput.setError("Username should be at least 3chars");
             return;
         }
+
+
         setInProgress(true);
         if(userModel != null){
             userModel.setUsername(username);
@@ -83,13 +85,16 @@ public class LoginUsernameActivity extends AppCompatActivity {
     }
 
     void setInProgress(boolean inProgress){
-        if(inProgress){
-            progressBar.setVisibility(View.VISIBLE);
-            letMeInBtn.setVisibility(View.GONE);
-        }
-        else {
-            progressBar.setVisibility(View.GONE);
-            letMeInBtn.setVisibility(View.VISIBLE);
-        }
+        runOnUiThread(() -> {
+            if(inProgress){
+                progressBar.setVisibility(View.VISIBLE);
+                letMeInBtn.setVisibility(View.GONE);
+            }
+            else {
+                progressBar.setVisibility(View.GONE);
+                letMeInBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 }
