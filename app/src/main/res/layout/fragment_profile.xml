@@ -48,7 +48,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/baseline_rounded_corner_24"
+            android:background="@drawable/edit_text_rounded_corner"
             android:text="Update Profile"
             android:textColor="@color/black"
             android:id="@+id/profile_update_btn"/>
