@@ -1,7 +1,9 @@
 package com.example.onagi2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     TextView toolbarTitle;
     ImageView leftIcon;
     BottomNavigationView bottomNavigationView;
+    ImageButton searchButton;
 
 
 
@@ -31,10 +34,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        searchButton = findViewById(R.id.main_search_btn);
+
         BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.notify);
         badgeDrawable.setVisible(true);
         badgeDrawable.setNumber(4);
+
+        searchButton.setOnClickListener((v ->
+                startActivity(new Intent(MainActivity.this, SearchUserActivity.class))));
 
 
 
