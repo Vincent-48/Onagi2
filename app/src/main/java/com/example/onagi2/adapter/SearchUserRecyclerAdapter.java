@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onagi2.FirebaseUtil;
 import com.example.onagi2.Model.UserModel;
 import com.example.onagi2.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -27,6 +28,12 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
     protected void onBindViewHolder(@NonNull UserModelViewHolder holder, int position, @NonNull UserModel model) {
         holder.usernameText.setText(model.getUsername());
         holder.phoneText.setText(model.getPhone());
+        if (model.getUserId().equals(FirebaseUtil.currentUserId())){
+            holder.usernameText.setText(model.getUsername()+"(Me)");
+        }
+        holder.itemView.setOnClickListener(v -> {
+            //Navigate to Messages section
+        });
 
     }
 
