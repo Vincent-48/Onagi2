@@ -1,6 +1,7 @@
 package com.example.onagi2.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onagi2.FirebaseUtil;
+import com.example.onagi2.MessageActivity;
 import com.example.onagi2.Model.UserModel;
 import com.example.onagi2.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -32,7 +34,10 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
             holder.usernameText.setText(model.getUsername()+"(Me)");
         }
         holder.itemView.setOnClickListener(v -> {
-            //Navigate to Messages section
+            //Navigate to Messages Activity
+            Intent intent = new Intent(context, MessageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
 
     }
