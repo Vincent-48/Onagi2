@@ -31,6 +31,7 @@ public class SearchUserActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_btn);
         recyclerView = findViewById(R.id.search_user_recyler_view);
 
+
         searchInput.requestFocus();
 
         backButton.setOnClickListener(v -> {
@@ -41,7 +42,6 @@ public class SearchUserActivity extends AppCompatActivity {
             String searchTerm = searchInput.getText().toString();
             if (searchTerm.isEmpty() || searchTerm.length() < 3){
                 searchInput.setError("Invalid Username");
-                System.out.println("Enter valid username");
                 return;
             }
             setupSearchRecyclerView(searchTerm);
@@ -72,6 +72,14 @@ public class SearchUserActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        if (adapter != null){
+            adapter.stopListening();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         if (adapter != null){
             adapter.stopListening();
         }

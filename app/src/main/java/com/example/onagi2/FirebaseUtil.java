@@ -18,10 +18,21 @@ public class FirebaseUtil {
             return false;
         }
     }
-    public static DocumentReference currentUserDetails(){
+    public static String currentUserDetails(){
         return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
     }
     public static CollectionReference allUserCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users");
+    }
+    public static DocumentReference getChatroomReference(String chatroomId){
+        return FirebaseFirestore.getInstance().collection("chatrooms").document(chatroomId);
+    }
+    public static String getChatroomId(String userId1, String userId2){
+        if (userId1.hashCode() < userId2.hashCode()) {
+            return userId1 + " " + userId2;
+        }
+        else {
+            return userId2 + " " + userId1;
+        }
     }
 }
