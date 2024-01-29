@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onagi2.AndroidUtil;
 import com.example.onagi2.FirebaseUtil;
 import com.example.onagi2.MessageActivity;
 import com.example.onagi2.Model.UserModel;
@@ -36,6 +37,7 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
         holder.itemView.setOnClickListener(v -> {
             //Navigate to Messages Activity
             Intent intent = new Intent(context, MessageActivity.class);
+            AndroidUtil.passUserModelIntent(intent,model);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
