@@ -1,13 +1,15 @@
 package com.example.onagi2.Model;
 
-import java.sql.Timestamp;
+import com.google.firebase.Timestamp;
+
 import java.util.List;
 
 public class ChatroomModel {
     String chatroomId;
-    List<String>userIds;
+    List<String> userIds;
     Timestamp lastMessageTimestamp;
     String lastMessageSenderId;
+    String lastMessage;
 
     public ChatroomModel() {
     }
@@ -17,9 +19,6 @@ public class ChatroomModel {
         this.userIds = userIds;
         this.lastMessageTimestamp = lastMessageTimestamp;
         this.lastMessageSenderId = lastMessageSenderId;
-    }
-
-    public ChatroomModel(String chatroomId, List<String> userIds, com.google.firebase.Timestamp now, String lastMessageSenderId) {
     }
 
     public String getChatroomId() {
@@ -53,4 +52,13 @@ public class ChatroomModel {
     public void setLastMessageSenderId(String lastMessageSenderId) {
         this.lastMessageSenderId = lastMessageSenderId;
     }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
 }

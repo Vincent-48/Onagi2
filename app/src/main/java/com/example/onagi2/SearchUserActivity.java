@@ -53,6 +53,7 @@ public class SearchUserActivity extends AppCompatActivity {
 
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
                 .setQuery(query,UserModel.class).build();
+
         adapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -77,13 +78,6 @@ public class SearchUserActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (adapter != null){
-            adapter.stopListening();
-        }
-    }
 
     @Override
     protected void onResume() {
