@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +52,7 @@ public class MessageActivity extends AppCompatActivity {
     void getOrCreateChatroomModel(){
         FirebaseUtil.getChatroomReference(chatroomId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
+                Toast.makeText(getBaseContext(),"is successful",Toast.LENGTH_SHORT).show();
                 chatroomModel = task.getResult().toObject(ChatroomModel.class);
                 if(chatroomModel==null){
                     //first time chat
