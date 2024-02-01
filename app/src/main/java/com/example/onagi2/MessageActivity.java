@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +32,7 @@ public class MessageActivity extends AppCompatActivity {
 
         //get UserModel
         otherUser = AndroidUtil.getUserModelFromIntent(getIntent());
-        chatroomId = FirebaseUtil.getChatroomId(FirebaseUtil.currentUserId(),otherUser.getUserId());
+        chatroomId = FirebaseUtil.getChatroomId(FirebaseUtil.currentUserId(), otherUser.getUserId());
 
         messageInput = findViewById(R.id.chat_message_input);
         backBtn = findViewById(R.id.back_btn);
@@ -44,15 +43,27 @@ public class MessageActivity extends AppCompatActivity {
         backBtn.setOnClickListener((v)->{
             onBackPressed();
         });
+        sendMessageBtn.setOnClickListener(v -> {
+            String message = messageInput.getText().toString().trim();
+            if (message.isEmpty()){
+                return;
+            }
+            else {
+                sendMessageToUser(message);
+            }
+
+        });
 
        otherUsername.setText(otherUser.getUsername());
        getOrCreateChatroomModel();
 
     }
+    void sendMessageToUser(String message){
+
+    }
     void getOrCreateChatroomModel(){
         FirebaseUtil.getChatroomReference(chatroomId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
-                Toast.makeText(getBaseContext(),"is successful",Toast.LENGTH_SHORT).show();
                 chatroomModel = task.getResult().toObject(ChatroomModel.class);
                 if(chatroomModel==null){
                     //first time chat
@@ -62,7 +73,16 @@ public class MessageActivity extends AppCompatActivity {
                             Timestamp.now(),
                             ""
                     );
-                    FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel);
+                    FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel)
+                            .addOnCompleteListener(setTask -> {
+                                if (setTask.isSuccessful()) {
+                                    // Perform actions dependent on the chatroomModel here
+                                } else {
+                                    // Handle failure to create the chatroom
+                                }
+                            });
+
+
 
             }
         }
