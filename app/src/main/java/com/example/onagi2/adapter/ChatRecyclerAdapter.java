@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,9 +39,16 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
 
     class ChatModelViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout leftChatLayout, rightChatLayout;
+        TextView leftTextview, rightTextview;
 
         public ChatModelViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            leftChatLayout = itemView.findViewById(R.id.left_chat_layout);
+            rightChatLayout = itemView.findViewById(R.id.right_chat_layout);
+            leftTextview = itemView.findViewById(R.id.left_chat_textview);
+            rightTextview = itemView.findViewById(R.id.right_chat_textview);
 
 
         }
