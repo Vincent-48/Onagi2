@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onagi2.FirebaseUtil;
 import com.example.onagi2.Model.ChatMessageModel;
 import com.example.onagi2.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -26,7 +27,16 @@ public class ChatRecyclerAdapter extends FirestoreRecyclerAdapter<ChatMessageMod
 
     @Override
     protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessageModel model) {
-
+        if (model.getSenderId().equals(FirebaseUtil.currentUserId())){
+            holder.leftChatLayout.setVisibility(View.GONE);
+            holder.rightChatLayout.setVisibility(View.VISIBLE);
+            holder.rightTextview.setText(model.getMessage());
+        }
+        else {
+            holder.rightChatLayout.setVisibility(View.GONE);
+            holder.leftChatLayout.setVisibility(View.VISIBLE);
+            holder.leftTextview.setText(model.getMessage());
+        }
 
     }
 
