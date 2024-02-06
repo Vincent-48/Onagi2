@@ -102,6 +102,7 @@ public class MessageActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()){
+                            System.out.println("******");
                             messageInput.setText("");
                         }
                     }
