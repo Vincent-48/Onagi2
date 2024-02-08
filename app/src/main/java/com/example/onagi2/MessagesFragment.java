@@ -28,4 +28,8 @@ public class MessagesFragment extends Fragment {
         return view;
         setupRecyclerView();
     }
+
+    void setupRecyclerView(){
+
+    }
 }
