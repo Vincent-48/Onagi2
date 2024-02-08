@@ -26,5 +26,6 @@ public class MessagesFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_messages, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
         return view;
+        setupRecyclerView();
     }
 }
