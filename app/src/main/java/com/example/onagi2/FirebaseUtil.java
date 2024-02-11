@@ -37,4 +37,8 @@ public class FirebaseUtil {
             return userId2+"_"+userId1;
         }
     }
+    public static CollectionReference allChatroomCollectionReference(){
+        return FirebaseFirestore.getInstance().collection("chatrooms");
+    }
+    public  static DocumentReference getUserId(){}
 }

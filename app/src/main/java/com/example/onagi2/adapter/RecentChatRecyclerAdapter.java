@@ -40,7 +40,6 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
         TextView usernameText;
         TextView lastMessageText;
         TextView lastMessageTime;
-        TextView phoneText;
         ImageView profilepic;
 
         public ChatroomModelViewHolder(@NonNull View itemView) {
