@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onagi2.Model.ChatroomModel;
 import com.example.onagi2.adapter.RecentChatRecyclerAdapter;
-import com.example.onagi2.adapter.RecentChatRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
@@ -33,8 +32,9 @@ public class MessagesFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_messages, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-        return view;
+
         setupRecyclerView();
+        return view;
     }
 
     void setupRecyclerView(){

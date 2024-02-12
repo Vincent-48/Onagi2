@@ -5,6 +5,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.List;
+
 public class FirebaseUtil {
     public static String currentUserId(){
         return FirebaseAuth.getInstance().getUid();
@@ -40,5 +42,10 @@ public class FirebaseUtil {
     public static CollectionReference allChatroomCollectionReference(){
         return FirebaseFirestore.getInstance().collection("chatrooms");
     }
-    public  static DocumentReference getUserId(){}
+    public static DocumentReference getOtherUserFromChatroom(List<String> userIds){
+        if (userIds.get(0).equals(FirebaseUtil.currentUserId())){
+            return allUserCollectionReference().document(userIds.get(1));
+        }else
+            return allUserCollectionReference().document(userIds.get(0));
+    }
 }
