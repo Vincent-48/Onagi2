@@ -1,6 +1,7 @@
 package com.example.onagi2.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onagi2.AndroidUtil;
 import com.example.onagi2.FirebaseUtil;
+import com.example.onagi2.MessageActivity;
 import com.example.onagi2.Model.ChatroomModel;
 import com.example.onagi2.Model.UserModel;
 import com.example.onagi2.R;
@@ -30,10 +33,26 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
         FirebaseUtil.getOtherUserFromChatroom(model.getUserIds())
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
+                        boolean lastMessageSentByMe = model.getLastMessageSenderId().equals(FirebaseUtil.currentUserId());
                         UserModel otherUserModel = task.getResult().toObject(UserModel.class);
+                        if (lastMessageSentByMe){
+                            holder.lastMessageText.setText("You :" + model.getLastMessage());
+                        }
+                        else
+                            holder.lastMessageText.setText(model.getLastMessage());
+
                         holder.usernameText.setText(otherUserModel.getUsername());
                         holder.lastMessageText.setText(model.getLastMessage());
-                        holder.lastMessageTime.setText(model.getLastMessageTimestamp().toString());
+                        holder.lastMessageTime.setText(FirebaseUtil.timestampToString(model.getLastMessageTimestamp()));
+
+                        holder.itemView.setOnClickListener(v -> {
+                            //Navigate to Messages Activity
+                            Intent intent = new Intent(context, MessageActivity.class);
+                            AndroidUtil.passUserModelIntent(intent,otherUserModel);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+
+                        });
                     }
                 });
 
