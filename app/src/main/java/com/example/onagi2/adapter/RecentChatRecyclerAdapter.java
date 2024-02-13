@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onagi2.FirebaseUtil;
 import com.example.onagi2.Model.ChatroomModel;
+import com.example.onagi2.Model.UserModel;
 import com.example.onagi2.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -25,7 +27,15 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
 
     @Override
     protected void onBindViewHolder(@NonNull ChatroomModelViewHolder holder, int position, @NonNull ChatroomModel model) {
-
+        FirebaseUtil.getOtherUserFromChatroom(model.getUserIds())
+                .get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        UserModel otherUserModel = task.getResult().toObject(UserModel.class);
+                        holder.usernameText.setText(otherUserModel.getUsername());
+                        holder.lastMessageText.setText(model.getLastMessage());
+                        holder.lastMessageTime.setText(model.getLastMessageTimestamp().toString());
+                    }
+                });
 
     }
 
