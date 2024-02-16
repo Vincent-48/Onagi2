@@ -15,6 +15,7 @@
         android:id="@+id/imageprofile"
         android:layout_width="160dp"
         android:layout_height="160dp"
+        android:background="@drawable/circular_bg"
         android:backgroundTint="@color/white"
         android:src="@drawable/baseline_person_24"
         android:scaleType="centerCrop"
