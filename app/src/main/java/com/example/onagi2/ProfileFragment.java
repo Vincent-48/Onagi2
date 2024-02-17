@@ -62,10 +62,13 @@ public class ProfileFragment extends Fragment {
             return;
         }
         currentUserModel.setUsername(newUsername);
+        setInProgress(true);
+        updateToFirestore();
     }
     void updateToFirestore(){
         FirebaseUtil.currentUserDetails().set(currentUserModel)
                 .addOnCompleteListener(task -> {
+                    setInProgress(false);
                    if (task.isSuccessful()){
                        AndroidUtil.showToast(getContext(),"Updated Successfully");
                    }
