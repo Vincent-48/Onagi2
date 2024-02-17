@@ -51,6 +51,12 @@ public class ProfileFragment extends Fragment {
         updateprofileBtn.setOnClickListener(v -> {
             updatebtnClick();
         });
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return view;
 
