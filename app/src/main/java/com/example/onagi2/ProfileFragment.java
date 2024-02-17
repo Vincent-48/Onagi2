@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.onagi2.Model.UserModel;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -21,6 +23,7 @@ public class ProfileFragment extends Fragment {
     Button updateprofileBtn;
     ProgressBar progressBar;
     TextView logoutBtn;
+    UserModel currentUserModel;
 
     View view;
 
@@ -50,6 +53,10 @@ public class ProfileFragment extends Fragment {
 
     }
     void getUserData(){
-
+        FirebaseUtil.currentUserDetails().get().addOnCompleteListener(task -> {
+            currentUserModel = task.getResult().toObject(UserModel.class);
+            usernameInput.setText(currentUserModel.getUsername());
+            phoneInput.setText(currentUserModel.getPhone());
+        });
     }
 }
