@@ -53,10 +53,24 @@ public class ProfileFragment extends Fragment {
 
     }
     void getUserData(){
+        setInProgress(true);
         FirebaseUtil.currentUserDetails().get().addOnCompleteListener(task -> {
+            setInProgress(false);
             currentUserModel = task.getResult().toObject(UserModel.class);
             usernameInput.setText(currentUserModel.getUsername());
             phoneInput.setText(currentUserModel.getPhone());
         });
+    }
+    void setInProgress(boolean inProgress){
+
+            if(inProgress){
+                progressBar.setVisibility(View.VISIBLE);
+                updateprofileBtn.setVisibility(View.GONE);
+            }
+            else {
+                progressBar.setVisibility(View.GONE);
+                updateprofileBtn.setVisibility(View.VISIBLE);
+            }
+
     }
 }
