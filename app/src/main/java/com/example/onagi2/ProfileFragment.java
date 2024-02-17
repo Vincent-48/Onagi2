@@ -48,9 +48,30 @@ public class ProfileFragment extends Fragment {
         logoutBtn = view.findViewById(R.id.log_out_btn);
 
         getUserData();
+        updateprofileBtn.setOnClickListener(v -> {
+            updatebtnClick();
+        });
 
         return view;
 
+    }
+    void updatebtnClick(){
+        String newUsername = usernameInput.getText().toString();
+        if (newUsername.isEmpty() || newUsername.length()<3){
+            usernameInput.setError("Username should be at least 3chars");
+            return;
+        }
+        currentUserModel.setUsername(newUsername);
+    }
+    void updateToFirestore(){
+        FirebaseUtil.currentUserDetails().set(currentUserModel)
+                .addOnCompleteListener(task -> {
+                   if (task.isSuccessful()){
+                       AndroidUtil.showToast(getContext(),"Updated Successfully");
+                   }
+                   else
+                       AndroidUtil.showToast(getContext(),"Update failed");
+                });
     }
     void getUserData(){
         setInProgress(true);
