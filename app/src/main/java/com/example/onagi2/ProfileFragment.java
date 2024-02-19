@@ -19,6 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.onagi2.Model.UserModel;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 
 public class ProfileFragment extends Fragment {
@@ -80,6 +84,16 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
 
             }
+        });
+        profilepic.setOnClickListener(v -> {
+            ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512,512)
+                    .createIntent(new Function1<Intent, Unit>() {
+                        @Override
+                        public Unit invoke(Intent intent) {
+                            imagePickLauncher.launch(intent);
+                            return null;
+                        }
+                    });
         });
 
         return view;
