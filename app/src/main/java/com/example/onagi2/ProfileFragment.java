@@ -1,6 +1,8 @@
 package com.example.onagi2;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.onagi2.Model.UserModel;
@@ -25,6 +30,8 @@ public class ProfileFragment extends Fragment {
     ProgressBar progressBar;
     TextView logoutBtn;
     UserModel currentUserModel;
+    ActivityResultLauncher<Intent> imagePickLauncher;
+    Uri selectedImageUri;
 
     View view;
 
@@ -33,8 +40,20 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result ->{
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        if (data !=null && data.getData() != null){
+                            selectedImageUri = data.getData();
 
-
+                        }
+                    }
+                });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
