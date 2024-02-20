@@ -2,11 +2,11 @@ package com.example.onagi2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     TextView txtName;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchButton.setOnClickListener((v ->
                 startActivity(new Intent(MainActivity.this, SearchUserActivity.class))));
+        getFCMToken();
 
 
 
@@ -53,23 +55,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.home:
                         replaceFragment(new HomeFragment());
-                        Toast.makeText(MainActivity.this,"Home",Toast.LENGTH_SHORT).show();
+
                         break;
                     case R.id.friends:
                         replaceFragment(new FriendsFragment());
-                        Toast.makeText(MainActivity.this,"Friends!",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.profile:
                         replaceFragment(new ProfileFragment());
-                        Toast.makeText(MainActivity.this,"Profile",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.notify:
                         replaceFragment(new NotifyFragment());
-                        Toast.makeText(MainActivity.this,"Notifications",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.messages:
                         replaceFragment(new MessagesFragment());
-                        Toast.makeText(MainActivity.this,"Messages",Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;
@@ -91,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+    void getFCMToken(){
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                String token = task.getResult();
+                Log.i("My token",token);
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment){
