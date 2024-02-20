@@ -108,6 +108,13 @@ public class ProfileFragment extends Fragment {
         }
         currentUserModel.setUsername(newUsername);
         setInProgress(true);
+
+        if (selectedImageUri != null){
+            FirebaseUtil.getCurrentProfilePicStorageRef().putFile(selectedImageUri)
+                    .addOnCompleteListener(task -> {
+                       updateToFirestore();
+                    });
+        }
         updateToFirestore();
     }
     void updateToFirestore(){
