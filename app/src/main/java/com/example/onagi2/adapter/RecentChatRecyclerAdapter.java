@@ -2,6 +2,7 @@ package com.example.onagi2.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,16 @@ public class RecentChatRecyclerAdapter extends FirestoreRecyclerAdapter<Chatroom
                     if (task.isSuccessful()){
                         boolean lastMessageSentByMe = model.getLastMessageSenderId().equals(FirebaseUtil.currentUserId());
                         UserModel otherUserModel = task.getResult().toObject(UserModel.class);
+
+                        FirebaseUtil.getCurrentProfilePicStorageRef().getDownloadUrl()
+                                .addOnCompleteListener(t -> {
+                                    if (t.isSuccessful()){
+                                        Uri uri = t.getResult();
+                                        AndroidUtil.setProfilePic(context,uri,holder.profilepic);
+                                    }
+
+                                });
+
                         if (lastMessageSentByMe){
                             holder.lastMessageText.setText("You :" + model.getLastMessage());
                         }

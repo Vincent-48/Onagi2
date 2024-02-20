@@ -129,6 +129,14 @@ public class ProfileFragment extends Fragment {
                 });
     }
     void getUserData(){
+        FirebaseUtil.getCurrentProfilePicStorageRef().getDownloadUrl()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()){
+                                Uri uri = task.getResult();
+                                AndroidUtil.setProfilePic(getContext(),uri,profilepic);
+                            }
+
+                        });
         setInProgress(true);
         FirebaseUtil.currentUserDetails().get().addOnCompleteListener(task -> {
             setInProgress(false);
