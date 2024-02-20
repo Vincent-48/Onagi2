@@ -2,7 +2,6 @@ package com.example.onagi2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchButton.setOnClickListener((v ->
                 startActivity(new Intent(MainActivity.this, SearchUserActivity.class))));
+
         getFCMToken();
 
 
@@ -79,22 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
     }
     void getFCMToken(){
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 String token = task.getResult();
-                Log.i("My token",token);
+                FirebaseUtil.currentUserDetails().update("fcmToken",token);
             }
         });
     }
