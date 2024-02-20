@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
                         Intent data = result.getData();
                         if (data !=null && data.getData() != null){
                             selectedImageUri = data.getData();
+                            AndroidUtil.setProfilePic(getContext(),selectedImageUri,profilepic);
 
                         }
                     }
