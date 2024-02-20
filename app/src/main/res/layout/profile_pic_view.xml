@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/profile_pic_image_view"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="@drawable/circular_bg"
         android:src="@drawable/person_icon"
         android:padding="4dp"
