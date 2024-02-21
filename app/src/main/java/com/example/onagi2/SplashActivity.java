@@ -14,7 +14,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         if (getIntent().getExtras() != null){
-
+            //from notification
+            String userId = getIntent().getExtras().getString("userId");
         }
         else {
             Handler handler = new Handler();
