@@ -16,6 +16,16 @@ public class SplashActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null){
             //from notification
             String userId = getIntent().getExtras().getString("userId");
+            FirebaseUtil.allUserCollectionReference().document(userId).get()
+                    .addOnCompleteListener(task -> {
+                       if (task.isSuccessful()){
+
+                           Intent intent = new Intent(this, MessageActivity.class);
+                           AndroidUtil.passUserModelIntent(intent,model);
+                           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                           context.startActivity(intent);
+                       }
+                    });
         }
         else {
             Handler handler = new Handler();
