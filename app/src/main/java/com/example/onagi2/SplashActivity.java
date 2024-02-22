@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.onagi2.Model.UserModel;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -13,17 +15,22 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if (getIntent().getExtras() != null){
+        if (FirebaseUtil.isLoggedIn() && getIntent().getExtras() != null){
             //from notification
             String userId = getIntent().getExtras().getString("userId");
             FirebaseUtil.allUserCollectionReference().document(userId).get()
                     .addOnCompleteListener(task -> {
                        if (task.isSuccessful()){
+                           UserModel model = task.getResult().toObject(UserModel.class);
+
+                           Intent mainIntent = new Intent(this,MainActivity.class);
+                           mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                           startActivity(mainIntent);
 
                            Intent intent = new Intent(this, MessageActivity.class);
                            AndroidUtil.passUserModelIntent(intent,model);
                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                           context.startActivity(intent);
+                           startActivity(intent);
                        }
                     });
         }
