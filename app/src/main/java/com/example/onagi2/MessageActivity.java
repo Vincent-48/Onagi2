@@ -125,7 +125,7 @@ public class MessageActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()){
                             messageInput.setText("");
-                            sendNotification();
+                            sendNotification(message);
                         }
                     }
                 });
@@ -159,6 +159,31 @@ public class MessageActivity extends AppCompatActivity {
      });
     }
     void sendNotification(String message){
+        // current username, message, currentuserid, otheruser token
+        FirebaseUtil.currentUserDetails().get().addOnCompleteListener(task -> {
+           if (task.isSuccessful()){
+               UserModel currentUser = task.getResult().toObject(UserModel.class);
+               try {
+                   JSONObject jsonObject = new JSONObject();
+
+                   JSONObject notificationObj = new JSONObject();
+                   notificationObj.put("title",currentUser.getUsername());
+                   notificationObj.put("body",message);
+
+                   JSONObject dataObj = new JSONObject();
+                   dataObj.put("userId",currentUser.getUserId());
+
+                   jsonObject.put("notification", notificationObj);
+                   jsonObject.put("data", dataObj);
+                   jsonObject.put("to", otherUser.getFcmToken());
+
+                   callApi(jsonObject);
+               }
+               catch (Exception e){
+
+               }
+           }
+        });
 
     }
     void callApi(JSONObject jsonObject){
