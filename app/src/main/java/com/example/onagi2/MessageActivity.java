@@ -23,7 +23,14 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 
+import org.json.JSONObject;
+
 import java.util.Arrays;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -118,6 +125,7 @@ public class MessageActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()){
                             messageInput.setText("");
+                            sendNotification();
                         }
                     }
                 });
@@ -149,6 +157,21 @@ public class MessageActivity extends AppCompatActivity {
             }
         }
      });
+    }
+    void sendNotification(String message){
+
+    }
+    void callApi(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization","Bearer AAAAZ6CFRB8:APA91bHZWSPaPiPg4oIATogiY3czokjqqXiFfcEnr834MPhYMpnGnC9PsfjiAgQUoFWPErEgJdy-owjuBSLBRYHa88kGpu58RHvFCsKgu2R90qJgAXe5f2pnvA8kGtbWrXzzTvzI8s-T")
+                .build();
+        client.newCall(request);
     }
 
 

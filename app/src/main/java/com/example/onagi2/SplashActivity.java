@@ -31,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                            AndroidUtil.passUserModelIntent(intent,model);
                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                            startActivity(intent);
+                           finish();
                        }
                     });
         }
