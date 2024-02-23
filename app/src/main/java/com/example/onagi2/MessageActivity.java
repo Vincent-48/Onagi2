@@ -25,12 +25,16 @@ import com.google.firebase.firestore.Query;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -196,7 +200,17 @@ public class MessageActivity extends AppCompatActivity {
                 .post(body)
                 .header("Authorization","Bearer AAAAZ6CFRB8:APA91bHZWSPaPiPg4oIATogiY3czokjqqXiFfcEnr834MPhYMpnGnC9PsfjiAgQUoFWPErEgJdy-owjuBSLBRYHa88kGpu58RHvFCsKgu2R90qJgAXe5f2pnvA8kGtbWrXzzTvzI8s-T")
                 .build();
-        client.newCall(request);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
     }
 
 
